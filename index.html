@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <!-- 开门动画 -->
+  <div class="door"></div>
+  <!-- 进入游戏 -->
+  <div class="game">
+    <div class="nav">
+      <div class="user">
+        <span>
+          👤
+        </span>
+        <span class="username">
+          Flinn
+        </span>
+      </div>
+      <div class="round">
+        <p>
+          当前回合
+          <div>
+
+          </div>
+        </p>
+        <div class="round-chess">
+
+        </div>
+      </div>
+
+    </div>
+    <div class="chess-board">
+
+    </div>
+    <div class="nav footer">
+      <div class="btn time">
+        <p class="cur-time">00:00:00</p>
+      </div>
+      <button class="btn reset">重开一局</button>
+    </div>
+
+  </div>
+  <!-- 游戏菜单 -->
+  <div class="game-menu">
+    <div class="menu-content">
+      <div class="menu-header">
+        <h4>五子棋</h4>
+      </div>
+      <div class="menu-body">
+        <button class="person-ai">A 人机对战</button>
+        <button class="double-person">B 双人对战</button>
+        <button class="person-msg">C 玩家信息</button>
+        <button class="add-person">D 添加玩家</button>
+      </div>
+    </div>
+  </div>
+  <!-- 添加玩家 -->
+  <div class="player">
+    <div class="player-header">
+      <h4>添加新玩家
+        <span>x</span>
+      </h4>
+    </div>
+    <div class="player-body">
+      <input type="text" placeholder="请输入玩家名称">
+    </div>
+    <div class="player-footer">
+      <button class="close">关闭</button>
+      <button class="save">保存</button>
+    </div>
+  </div>
+  <!-- 玩家信息 -->
+  <div class="msg">
+    <div class="msg-header">
+      <h4>玩家信息
+        <span>x</span>
+      </h4>
+    </div>
+    <div class="msg-body">
+      <ul>
+        <li class="top-active">
+          <span class="name-key float-left">昵称</span>
+          <span class="name-val float-right">Flinn</span>
+        </li>
+        <li>
+          <span class="win-key float-left">胜场</span>
+          <span class="win-val float-right">1</span>
+        </li>
+        <li>
+          <span class="fail-key float-left">负场</span>
+          <span class="fail-val float-right">2</span>
+        </li>
+        <li class="bottom-active">
+          <span class="total-key float-left">总场数</span>
+          <span class="total-val float-right">3</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./js/model.js"></script>
+  <script src="./js/view.js"></script>
+  <script src="./js/control.js"></script>
+  <!-- <script src="./js/index.js"></script> -->
+  <script src="./js/AI.js"></script>
+
+
+  <!-- <script src="./js/AI.js"></script> -->
+  <script src="./js/main.js"></script>
+
+</body>
+
+</html>
