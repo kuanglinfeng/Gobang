@@ -1,6 +1,4 @@
-
 // 这个文件负责处理界面
-
 
 /**
  * 创建一个棋盘
@@ -43,6 +41,7 @@ function showChessBoard(GameConfig, ChessType) {
 
 /**
  * 销毁棋盘
+ * @param {*} GameConfig 
  */
 function removeChessBoard(GameConfig) {
   GameConfig.chessBoardDom.innerHTML = ''
@@ -73,7 +72,9 @@ function pushChess(GameConfig, ChessType, GameData, x, y) {
 
 /**
  * 将棋子数组映射到界面上
- * @param {*} chessArr 
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
  */
 function mapChessArrToView(GameConfig, ChessType, GameData) {
   var blanks = Array.from(GameConfig.chessBoardDom.children)
@@ -93,7 +94,9 @@ function mapChessArrToView(GameConfig, ChessType, GameData) {
 /**
  * 是上两个函数的高级封装
  * 给顶一个坐标，如果这个坐标为空，则添加棋子同时在页面上显示
- * @param {*} chessArr 
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
  * @param {*} x 
  * @param {*} y 
  */
@@ -109,6 +112,9 @@ function showChess(GameConfig, ChessType, GameData, x, y) {
 
 /**
  * 将当前回合的棋子类型显示到界面
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
  */
 function showRound(GameConfig, ChessType, GameData) {
   var { nextChess } = GameData
@@ -123,7 +129,10 @@ function showRound(GameConfig, ChessType, GameData) {
 }
 
 
-// 时间组件
+/**
+ * 时间组件
+ * @param {*} GameConfig 
+ */
 function showTime(GameConfig) {
   setInterval(function () {
     GameConfig.curTimeDom.innerHTML = new Date().toLocaleTimeString()
@@ -155,6 +164,10 @@ function removMasklayer(GameConfig) {
   GameConfig.gameMenuDom.classList.add('remove')  
 }
 
+/**
+ * 显示遮罩层和菜单
+ * @param {*} GameConfig 
+ */
 function showMasklayerAndMenu(GameConfig) {
   GameConfig.gameMenuDom.classList.remove('remove')
   GameConfig.gameMenuContentDom.classList.remove('remove')

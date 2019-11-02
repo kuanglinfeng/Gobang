@@ -1,6 +1,5 @@
 
 function init() {
-
   // 游戏配置
   var GameConfig = {
     rows: 15,
@@ -82,20 +81,13 @@ function init() {
   GameData.computerWin = initMyWinAndComputerWin(GameData).computerWin
   removeChessBoard(GameConfig)
   removeEvents(GameConfig)
-  // initMenu(GameConfig)
-
-
 
   showChessBoard(GameConfig, GameData)
-
   // 从localStorage搜索玩家信息到后显示姓名
   showPlayerName(GameConfig)
-
-
   registerEvents(GameConfig, ChessType, GameData)
   showRound(GameConfig, ChessType, GameData)
   showTime(GameConfig)
-
 }
 
 init()

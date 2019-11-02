@@ -6,7 +6,7 @@ var _main = function () {
   init(gameConfig, chessArr, blankArr, nextChess)
 }
 
- _main()
+_main()
 
 
 

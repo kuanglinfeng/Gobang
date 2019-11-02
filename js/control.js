@@ -1,5 +1,6 @@
 /**
  * 获取点击棋格子的横纵坐标
+ * @param {*} GameConfig 
  * @param {*} target 
  */
 function getBlankPosition(GameConfig, target) {
@@ -12,12 +13,10 @@ function getBlankPosition(GameConfig, target) {
 
 /**
  * 判断是否有一方取胜
- * @param {*} wins 
- * @param {*} count 
+ * @param {*} GameData 
+ * @param {*} ChessType 
  * @param {*} x 
  * @param {*} y 
- * @param {*} myWin 
- * @param {*} computerWin 
  */
 function judgeWin(GameData, ChessType, x, y) {
   var { wins, count, nextChess } = GameData
@@ -45,9 +44,12 @@ function judgeWin(GameData, ChessType, x, y) {
 
 /**
  * 这个函数处理人落下棋子的显示及更新棋子数组，同时处理落下后，判断游戏状态
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
+ * @param {*} targetBlank 
  */
 function personFallingChess(GameConfig, ChessType, GameData, targetBlank) {
-
   if (!GameData.isOver) {
     var { x, y } = getBlankPosition(GameConfig, targetBlank)
     if (showChess(GameConfig, ChessType, GameData, x, y)) {
@@ -57,48 +59,63 @@ function personFallingChess(GameConfig, ChessType, GameData, targetBlank) {
           var msg = '恭喜，你赢了！'
           addUserWin()
         } else {
-          var msg = '抱歉，你输了！'
+          var msg = '很遗憾，你输了！'
+          addUserFail()
+        }
+        alert(msg)
+        GameData.isOver = true
+      }
+      return true
+    }
+  }
+  return false
+}
+
+/**
+ * 这个函数处理ai落下棋子的显示及更新棋子数组，同时处理落下后，判断游戏状态
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
+ */
+function aiFallingChess(GameConfig, ChessType, GameData) {
+  if (!GameData.isOver) {
+    var { bestX, bestY } = getBestPoint(GameData)
+    if (showChess(GameConfig, ChessType, GameData, bestX, bestY)) {
+      var person = judgeWin(GameData, ChessType, bestX, bestY)
+      if (person) {
+        if (person === ChessType.BLACK) {
+          var msg = '恭喜，你赢了！'
+          addUserWin()
+        } else {
+          var msg = '很遗憾，你输了！'
           addUserFail()
         }
         alert(msg)
         GameData.isOver = true
       }
     }
+
   }
 }
 
 /**
- * 这个函数处理ai落下棋子的显示及更新棋子数组，同时处理落下后，判断游戏状态
+ * 统一注册所有的dom事件
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ * @param {*} GameData 
  */
-function aiFallingChess(GameConfig, ChessType, GameData) {
-  if (!GameData.isOver) {
-    var { bestX, bestY } = getBestPoint(GameData)
-    showChess(GameConfig, ChessType, GameData, bestX, bestY)
-    var person = judgeWin(GameData, ChessType, bestX, bestY)
-    if (person) {
-      if (person === ChessType.BLACK) {
-        var msg = '恭喜，你赢了！'
-        addUserWin()
-      } else {
-        var msg = '抱歉，你输了！'
-        addUserFail()
-      }
-      alert(msg)
-      GameData.isOver = true
-    }
-  }
-}
-
-
 function registerEvents(GameConfig, ChessType, GameData) {
+  // 下棋
   GameConfig.chessBoardDom.onclick = function (e) {
     if (!GameData.AI) {
       personFallingChess(GameConfig, ChessType, GameData, e.target)
     } else {
-      personFallingChess(GameConfig, ChessType, GameData, e.target)
-      aiFallingChess(GameConfig, ChessType, GameData)
+      if (personFallingChess(GameConfig, ChessType, GameData, e.target)) {
+        aiFallingChess(GameConfig, ChessType, GameData)
+      }
     }
   }
+  // 重新开始
   GameConfig.resetDom.onclick = function () {
     init()
     showMasklayerAndMenu(GameConfig)
@@ -146,9 +163,21 @@ function registerEvents(GameConfig, ChessType, GameData) {
 
 }
 
-function removeEvents(gameConfig) {
-  gameConfig.chessBoardDom.onclick = null
-  gameConfig.resetDom.onclick = null
+/**
+ * 对所有注册的事件置空
+ * @param {*} GameConfig 
+ */
+function removeEvents(GameConfig) {
+  GameConfig.chessBoardDom.onclick = null
+  GameConfig.resetDom.onclick = null
+  GameConfig.personAiDom.onclick = null
+  GameConfig.doublePersonDom.onclick = null
+  GameConfig.personMsgDom.onclick = null
+  GameConfig.closeMsgDom.onclick = null
+  GameConfig.addPersonDom.onclick = null
+  GameConfig.savePlayerDom.onclick = null
+  GameConfig.closePlayerDom.onclick = null
+  GameConfig.closePlayerSpanDom.onclick = null
 }
 
 

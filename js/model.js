@@ -1,5 +1,10 @@
-// 这个文件负责处理数据相关
+// 这个文件负责生成数据模型
 
+/**
+ * 创建一个棋子数组
+ * @param {*} GameConfig 
+ * @param {*} ChessType 
+ */
 function createChessArr(GameConfig, ChessType) {
   var chessArr = []
   for (var i = 0; i < GameConfig.rows; i++) {
@@ -11,6 +16,10 @@ function createChessArr(GameConfig, ChessType) {
   return chessArr
 }
 
+/**
+ * 初始化赢法数组
+ * @param {*} GameConfig 
+ */
 function fillWins(GameConfig) {
   var count = 0
   var wins = []
@@ -55,6 +64,10 @@ function fillWins(GameConfig) {
   return { wins, count }
 }
 
+/**
+ * 初始化赢法统计数组
+ * @param {*} GameConfig 
+ */
 function initMyWinAndComputerWin(GameConfig) {
   var myWin = []
   var computerWin = []
