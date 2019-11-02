@@ -47,13 +47,20 @@ function judgeWin(GameData, ChessType, x, y) {
  * 这个函数处理人落下棋子的显示及更新棋子数组，同时处理落下后，判断游戏状态
  */
 function personFallingChess(GameConfig, ChessType, GameData, targetBlank) {
-  
+
   if (!GameData.isOver) {
     var { x, y } = getBlankPosition(GameConfig, targetBlank)
     if (showChess(GameConfig, ChessType, GameData, x, y)) {
       var person = judgeWin(GameData, ChessType, x, y)
       if (person) {
-        alert(person)
+        if (person === ChessType.BLACK) {
+          var msg = '恭喜，你赢了！'
+          addUserWin()
+        } else {
+          var msg = '抱歉，你输了！'
+          addUserFail()
+        }
+        alert(msg)
         GameData.isOver = true
       }
     }
@@ -69,7 +76,14 @@ function aiFallingChess(GameConfig, ChessType, GameData) {
     showChess(GameConfig, ChessType, GameData, bestX, bestY)
     var person = judgeWin(GameData, ChessType, bestX, bestY)
     if (person) {
-      alert(person)
+      if (person === ChessType.BLACK) {
+        var msg = '恭喜，你赢了！'
+        addUserWin()
+      } else {
+        var msg = '抱歉，你输了！'
+        addUserFail()
+      }
+      alert(msg)
       GameData.isOver = true
     }
   }
@@ -87,20 +101,39 @@ function registerEvents(GameConfig, ChessType, GameData) {
   }
   GameConfig.resetDom.onclick = function () {
     init()
+    showMasklayerAndMenu(GameConfig)
   }
+  // A 人机对战
   GameConfig.personAiDom.onclick = function () {
     removMasklayer(GameConfig)
     removeMenu(GameConfig)
     GameData.AI = true
   }
+  // B 双人对战
   GameConfig.doublePersonDom.onclick = function () {
     removMasklayer(GameConfig)
     removeMenu(GameConfig)
     GameData.AI = false
   }
+  // C 玩家信息
+  GameConfig.personMsgDom.onclick = function () {
+    removeMenu(GameConfig)
+    // 从localStorage中加载数据并显示
+    showPersonMsg(GameConfig)
+  }
+  GameConfig.closeMsgDom.onclick = function () {
+    removePersonMsg(GameConfig)
+    showMenu(GameConfig)
+  }
+  // D 添加玩家
   GameConfig.addPersonDom.onclick = function () {
     showAddPerson(GameConfig)
-
+  }
+  GameConfig.savePlayerDom.onclick = function () {
+    savePlayer(GameConfig)
+    removeAddPerson(GameConfig)
+    showMenu(GameConfig)
+    clearPersonInputValue(GameConfig)
   }
   GameConfig.closePlayerDom.onclick = function () {
     removeAddPerson(GameConfig)
@@ -110,14 +143,7 @@ function registerEvents(GameConfig, ChessType, GameData) {
     removeAddPerson(GameConfig)
     showMenu(GameConfig)
   }
-  GameConfig.personMsgDom.onclick = function () {
-    removeMenu(GameConfig)
-    showPersonMsg(GameConfig)
-  }
-  GameConfig.closeMsgDom.onclick = function () {
-    removePersonMsg(GameConfig)
-    showMenu(GameConfig)
-  }
+
 }
 
 function removeEvents(gameConfig) {

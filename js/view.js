@@ -98,7 +98,6 @@ function mapChessArrToView(GameConfig, ChessType, GameData) {
  * @param {*} y 
  */
 function showChess(GameConfig, ChessType, GameData, x, y) {
-  var { nextChess } = GameData
   if (pushChess(GameConfig, ChessType, GameData, y, x)) {
     mapChessArrToView(GameConfig, ChessType, GameData)
     showRound(GameConfig, ChessType, GameData)
@@ -150,10 +149,15 @@ function removeMenu(GameConfig) {
 
 /**
  * 移除遮罩层
- * @param {}} params 
+ * @param {} params 
  */
 function removMasklayer(GameConfig) {
   GameConfig.gameMenuDom.classList.add('remove')  
+}
+
+function showMasklayerAndMenu(GameConfig) {
+  GameConfig.gameMenuDom.classList.remove('remove')
+  GameConfig.gameMenuContentDom.classList.remove('remove')
 }
 
 /**
@@ -179,9 +183,44 @@ function removeAddPerson(GameConfig) {
  */
 function showPersonMsg(GameConfig) {
   GameConfig.gameMenuContentDom.classList.add('remove')
+  // 开场动画
   GameConfig.msgDom.classList.add('show')
+  // 从localStorage加载信息，然后显示具体信息
+  var user = getUser()
+  GameConfig.nickNameDom.innerHTML = user.name
+  GameConfig.winDom.innerHTML = user.win
+  GameConfig.failDom.innerHTML = user.fail
+  GameConfig.totalDom.innerHTML = user.total
 }
 
 function removePersonMsg(GameConfig) {
   GameConfig.msgDom.classList.remove('show')
+}
+
+/**
+ * 清空玩家信息输入框
+ * @param {*} GameConfig 
+ */
+function clearPersonInputValue(GameConfig) {
+  GameConfig.inputPlayerDom.value = ''
+}
+
+/**
+ * 保存玩家信息
+ * @param {*} GameConfig 
+ */
+function savePlayer(GameConfig) {
+  var name = GameConfig.inputPlayerDom.value
+  createUser(name)
+  GameConfig.userNameDom.innerHTML = name
+}
+
+/**
+ * 从localStorage中读取玩家信息，将玩家姓名显示到主界面上，没有则不显示
+ */
+function showPlayerName(GameConfig) {
+  var user = getUser()
+  if (user) {
+    GameConfig.userNameDom.innerHTML = user.name
+  }
 }
